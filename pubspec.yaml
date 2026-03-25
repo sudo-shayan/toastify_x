@@ -1,0 +1,25 @@
+name: toastify_x
+description: "A premium, highly customizable toast notification system for Flutter with modern styles like Modern, Minimal, Glass, and Flat. Smooth animations and easy setup."
+version: 1.0.0
+homepage: "https://github.com/sudo-shayan/toastify_x"
+repository: "https://github.com/sudo-shayan/toastify_x"
+issue_tracker: "https://github.com/sudo-shayan/toastify_x/issues"
+documentation: "https://github.com/sudo-shayan/toastify_x#readme"
+
+environment:
+  sdk: ^3.10.7
+  flutter: ">=3.10.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^6.0.0
+
+flutter:
+  uses-material-design: true
+
+license: "MIT"
