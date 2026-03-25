@@ -21,7 +21,7 @@ Add `toastify_x` to your `pubspec.yaml`:
 
 ```yaml
 dependencies:
-  toastify_x: ^1.0.0
+  toastify_x: ^1.1.0
 ```
 
 ## 🛠 Usage
