@@ -13,6 +13,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'ToastifyX Demo',
       debugShowCheckedModeBanner: false,
+      // The navigatorKey is REQUIRED for ToastifyX to show toasts globally
       navigatorKey: toastNavigatorKey,
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(
@@ -39,11 +40,13 @@ class _ToastDemoScreenState extends State<ToastDemoScreen> {
   AnimationType _selectedAnimation = AnimationType.slide;
   Color? _selectedColor;
   bool _enableBlur = false;
+  // Advanced feature switches
   bool _showProgress = false;
   bool _useCustomIcon = false;
   bool _useBoldText = false;
   bool _useExtraPadding = false;
 
+  /// Helper method to trigger a toast with current configurations
   void _showToast(ToastType type) {
     String message = "";
     switch (type) {
@@ -123,12 +126,13 @@ class _ToastDemoScreenState extends State<ToastDemoScreen> {
                   ),
                 ),
                 const SizedBox(height: 40),
+                // Use Expanded + SingleChildScrollView to prevent overflow on small screens
                 Expanded(
                   child: SingleChildScrollView(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        // Configuration Section
+                        // --- CONFIGURATION SECTION ---
                         _buildSectionTitle('STYLE'),
                         Wrap(
                           spacing: 10,

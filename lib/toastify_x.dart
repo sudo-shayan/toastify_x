@@ -3,19 +3,42 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 
 // ================= ENUMS =================
+
+/// Types of toasts available in ToastifyX.
 enum ToastType { success, error, warning, info, loading }
+
+/// Physical position of the toast on the screen.
 enum ToastPosition { top, center, bottom }
+
+/// visual styling of the toast container.
 enum ToastStyle { modern, minimal, glass, flat }
+
+/// Entry/Exit animation types.
 enum AnimationType { slide, scale, fade, bounce }
 
 // ================= GLOBAL =================
+
+/// Global navigator key required for showing toasts without BuildContext.
 final GlobalKey<NavigatorState> toastNavigatorKey = GlobalKey<NavigatorState>();
 
 // ================= MAIN =================
+
+/// Main class for interacting with ToastifyX.
 class ToastifyX {
   static final List<_ToastRequest> _queue = [];
   static bool _isShowing = false;
 
+  /// Displays a toast notification with the specified parameters.
+  /// 
+  /// - [message]: The text content to display.
+  /// - [type]: Predefined toast type (success, error, etc.) for icons and colors.
+  /// - [position]: Where on the screen to show the toast.
+  /// - [style]: The visual theme (glassmorphism, flat, etc.).
+  /// - [animationType]: How the toast enters/exits.
+  /// - [duration]: How long the toast stays visible.
+  /// - [backgroundColor]: Custom color to override the type-based default.
+  /// - [customIcon]: Custom icon to override the type-based default.
+  /// - [showProgress]: Adds a loading indicator and prevents auto-dismiss.
   static void show(
     BuildContext? context, {
     required String message,
@@ -55,10 +78,12 @@ class ToastifyX {
       showProgress: showProgress,
     );
 
+    // Queue the toast to prevent overlaps
     _queue.add(request);
     _showNext();
   }
 
+  /// Manages the queue and shows the next toast if nothing is currently showing.
   static void _showNext() {
     if (_isShowing || _queue.isEmpty) return;
 
@@ -153,6 +178,7 @@ class _ToastWidgetState extends State<_ToastWidget>
       duration: const Duration(milliseconds: 300),
     );
 
+    // Calculate the start offset for slide animations based on position
     Offset beginOffset = const Offset(0, -0.2);
     if (widget.request.position == ToastPosition.bottom) {
       beginOffset = const Offset(0, 0.2);
@@ -160,6 +186,7 @@ class _ToastWidgetState extends State<_ToastWidget>
       beginOffset = const Offset(0, 0.0);
     }
 
+    // Configure the slide animation (Bounce vs Ease)
     _slide = Tween<Offset>(
       begin: widget.request.animationType == AnimationType.bounce
           ? (widget.request.position == ToastPosition.bottom
@@ -182,6 +209,7 @@ class _ToastWidgetState extends State<_ToastWidget>
 
     _controller.forward();
 
+    // Auto-dismiss logic (disabled for loading/progress types)
     if (widget.request.type != ToastType.loading && !widget.request.showProgress) {
       Future.delayed(widget.request.duration, () async {
         if (mounted) {
